@@ -1,8 +1,7 @@
 import React from 'react';
 // import ReactDOM from 'react-dom';
 import './board.css';
-// import Card from './Card';
-import CardBack from './media/gray_back.png';
+import Card from './Card';
 import Ace1 from './media/Ace1.png';
 import King1 from './media/King1.png';
 import Queen1 from './media/Queen1.png';
@@ -25,16 +24,7 @@ import Six2 from './media/Six2.png';
 import Five2 from './media/Five2.png';
 
 const boardStyle = {
-    width: "100%"
-}
-
-const cardStyles = {
-    height: "11vh",
-    margin: "5vh 4vw"
-}
-const cardBackStyles = {
-    height: "11vh",
-    margin: "5vh 4vw"
+    width: "100vw"
 }
 
 class Board extends React.Component {
@@ -58,19 +48,13 @@ class Board extends React.Component {
     componentWillMount() {
         this.shuffleArray(this.state.deck);
     };
-    componentDidMount() {
-        console.log(this.state.deck);
-    }
 
     render(props) {
         return(
             <React.Fragment>
                 <div style={boardStyle}>
                     {this.state.deck.map(d => (
-                        <span key={d}>
-                            <img src={d} className="card" style={cardStyles} alt=""/>
-                            <img src={CardBack} className="cardBack" style={cardBackStyles} alt=""/>
-                        </span>
+                        <Card key={d} src={d} cardId={d} />
                     ))};
                 </div>
             </React.Fragment>

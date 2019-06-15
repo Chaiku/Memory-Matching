@@ -54,7 +54,12 @@ class Board extends React.Component {
             <React.Fragment>
                 <div style={boardStyle}>
                     {this.state.deck.map(d => (
-                        <Card key={d} src={d} cardId={d} />
+                        <Card 
+                            key={d} 
+                            src={d} 
+                            cardId={d.substr(14).slice(0, -13)} 
+                            value={d.substr(14).slice(0, -14)}
+                        />
                     ))};
                 </div>
             </React.Fragment>

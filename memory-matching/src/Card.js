@@ -4,9 +4,11 @@ import './card.css'
 
 class Card extends Component {
     state={ flipped: false }
+
     
 flipCard = (event) => {
-    this.setState({ flipped: true })
+    this.setState({ flipped: true });
+    console.log("Value read in Card.js: " + event.target.value);
 };
 
     render(props) {
@@ -19,14 +21,19 @@ flipCard = (event) => {
                 style={{transform: `${this.state.flipped ? "rotateY(180deg)" : null}`}}
                 >
                 <img src={CardBack}
-                    onClick={this.flipCard}
                     className="cardBack" 
                     alt=""
+                    value={this.props.value}
+                    onClick={ (event) => {
+                        this.flipCard(event);
+                        this.props.handleFlip(event);
+                    }}
                 />
                 <img 
                     src={this.props.src} 
                     className="cardFace" 
                     alt=""
+                    value={this.props.value}
                     style={{ transform: "rotateY(180deg)"}}
                 />
             </div>

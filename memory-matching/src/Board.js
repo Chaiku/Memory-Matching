@@ -35,7 +35,9 @@ class Board extends React.Component {
             Nine1, Nine2, Eight1, Eight2, Seven1,
             Seven2, Six1, Six2, Five1, Five2
         ],
+        flippedCards: []
     };
+
 
     shuffleArray = (array) => {
         let i = 0;
@@ -44,6 +46,10 @@ class Board extends React.Component {
             [array[i], array[j]] = [array[j], array[i]];
         };
     };
+
+    handleFlip = (event) => {
+        console.log("Value read in Board.js: " + event.target.value);
+    }
 
     componentWillMount() {
         this.shuffleArray(this.state.deck);
@@ -55,12 +61,14 @@ class Board extends React.Component {
                 <div style={boardStyle}>
                     {this.state.deck.map(d => (
                         <Card 
-                            key={d} 
+                            key={d.slice(0, -13)} 
                             src={d} 
                             cardId={d.substr(14).slice(0, -13)} 
                             value={d.substr(14).slice(0, -14)}
+                            handleFlip={this.handleFlip}
                         />
                     ))};
+
                 </div>
             </React.Fragment>
         )

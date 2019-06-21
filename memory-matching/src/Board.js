@@ -48,7 +48,7 @@ class Board extends React.Component {
     };
 
     handleFlip = (event) => {
-        console.log("Value read in Board.js: " + event.target.value);
+        console.log("Value read in Board.js: " + event.target.dataset.value);
     }
 
     componentWillMount() {
@@ -59,12 +59,12 @@ class Board extends React.Component {
         return(
             <React.Fragment>
                 <div style={boardStyle}>
-                    {this.state.deck.map(d => (
+                    {this.state.deck.map((data, d) => (
                         <Card 
-                            key={d.slice(0, -13)} 
-                            src={d} 
-                            cardId={d.substr(14).slice(0, -13)} 
-                            value={d.substr(14).slice(0, -14)}
+                            key={d} 
+                            src={data} 
+                            cardId={data.substr(14).slice(0, -13)} 
+                            value={data.substr(14).slice(0, -14)}
                             handleFlip={this.handleFlip}
                         />
                     ))};

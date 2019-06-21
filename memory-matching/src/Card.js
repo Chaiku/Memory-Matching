@@ -14,7 +14,7 @@ flipCard = (event) => {
     render(props) {
         return(
             <div 
-                key={this.props.key} 
+                key={this.props.keyProp} 
                 className="card" 
                 id={this.props.cardId}
                 data-value={this.props.value}

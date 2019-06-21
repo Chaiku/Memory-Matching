@@ -35,7 +35,9 @@ class Board extends React.Component {
             Nine1, Nine2, Eight1, Eight2, Seven1,
             Seven2, Six1, Six2, Five1, Five2
         ],
-        flippedCards: []
+        flippedCards: [],
+        flippedOne: '',
+        flippedTwo: ''
     };
 
 
@@ -49,6 +51,12 @@ class Board extends React.Component {
 
     handleFlip = (event) => {
         console.log("Value read in Board.js: " + event.target.dataset.value);
+        this.state.flippedOne === '' ?  //if flipedOne in state is still blank...
+        this.setState({ flippedOne: event.target.dataset.value }) : //assign clicked card to flippedOne, otherwise
+        this.setState({ flippedTwo: event.target.dataset.value });  //assign clicked card to flippedTwo
+        setTimeout(this.state.flippedOne === this.state.flippedTwo ? //and if they match
+        console.log("they match") :
+        console.log("they don't match"), 1000);
     }
 
     componentWillMount() {
@@ -62,6 +70,7 @@ class Board extends React.Component {
                     {this.state.deck.map((data, d) => (
                         <Card 
                             key={d} 
+                            keyProp={d}
                             src={data} 
                             cardId={data.substr(14).slice(0, -13)} 
                             value={data.substr(14).slice(0, -14)}

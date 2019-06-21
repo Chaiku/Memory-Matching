@@ -8,7 +8,7 @@ class Card extends Component {
     
 flipCard = (event) => {
     this.setState({ flipped: true });
-    console.log("Value read in Card.js: " + event.target.value);
+    console.log("Value read in Card.js: " + event.target.dataset.value);
 };
 
     render(props) {
@@ -17,13 +17,14 @@ flipCard = (event) => {
                 key={this.props.key} 
                 className="card" 
                 id={this.props.cardId}
-                value={this.props.value}
+                data-value={this.props.value}
                 style={{transform: `${this.state.flipped ? "rotateY(180deg)" : null}`}}
                 >
                 <img src={CardBack}
                     className="cardBack" 
                     alt=""
-                    value={this.props.value}
+                    // value={this.props.value}
+                    data-value={this.props.value}
                     onClick={ (event) => {
                         this.flipCard(event);
                         this.props.handleFlip(event);
@@ -33,7 +34,6 @@ flipCard = (event) => {
                     src={this.props.src} 
                     className="cardFace" 
                     alt=""
-                    value={this.props.value}
                     style={{ transform: "rotateY(180deg)"}}
                 />
             </div>

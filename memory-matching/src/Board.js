@@ -35,9 +35,10 @@ class Board extends React.Component {
             Nine1, Nine2, Eight1, Eight2, Seven1,
             Seven2, Six1, Six2, Five1, Five2
         ],
-        flippedCards: [],
+        flippedCards: 0,
         flippedOne: '',
-        flippedTwo: ''
+        flippedTwo: '',
+        matchFound: false,
     };
 
 
@@ -49,14 +50,24 @@ class Board extends React.Component {
         };
     };
 
+    checkMatch = () => {
+        this.state.flippedOne === this.state.flippedTwo ? 
+        this.setState({ matchFound: true }):
+        this.setState({ matchFound: false });
+        console.log("Match?" + this.state.matchFound);
+    }
+
     handleFlip = (event) => {
+        this.setState({ flippedCards: this.state.flippedCards + 1 });  //add one to number of flipped cards
         console.log("Value read in Board.js: " + event.target.dataset.value);
         this.state.flippedOne === '' ?  //if flipedOne in state is still blank...
         this.setState({ flippedOne: event.target.dataset.value }) : //assign clicked card to flippedOne, otherwise
         this.setState({ flippedTwo: event.target.dataset.value });  //assign clicked card to flippedTwo
-        setTimeout(this.state.flippedOne === this.state.flippedTwo ? //and if they match
-        console.log("they match") :
-        console.log("they don't match"), 1000);
+        
+        if(this.state.flippedTwo !== '') { 
+        setTimeout( () => this.checkMatch(), 1000);
+        }
+
     }
 
     componentWillMount() {
@@ -67,16 +78,19 @@ class Board extends React.Component {
         return(
             <React.Fragment>
                 <div style={boardStyle}>
-                    {this.state.deck.map((data, d) => (
+                    {this.state.deck.map(data => (
                         <Card 
-                            key={d} 
-                            keyProp={d}
+                            key={data} 
+                            keyProp={data}
                             src={data} 
-                            cardId={data.substr(14).slice(0, -13)} 
-                            value={data.substr(14).slice(0, -14)}
+                            cardId={data.substr(14).slice(0, -13)} //e.g. Ace1, Ace2    
+                            value={data.substr(14).slice(0, -14)}  //e.g. Ace, Ace
                             handleFlip={this.handleFlip}
+                            matchFound={this.state.matchFound}
+                            twoFlipped={this.state.flippedTwo}
                         />
-                    ))};
+                        
+                    ))}
 
                 </div>
             </React.Fragment>

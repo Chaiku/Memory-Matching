@@ -36,11 +36,12 @@ class Board extends React.Component {
             Seven2, Six1, Six2, Five1, Five2
         ],
         flippedCards: 0,
-        flippedOne: '',
+        flippedOne: 'x',
         flippedTwo: '',
         matchFound: false,
     };
 
+    cardElement = React.createRef();
 
     shuffleArray = (array) => {
         let i = 0;
@@ -49,30 +50,43 @@ class Board extends React.Component {
             [array[i], array[j]] = [array[j], array[i]];
         };
     };
-
-    checkMatch = () => {
-        this.state.flippedOne === this.state.flippedTwo ? 
-        this.setState({ matchFound: true }):
-        this.setState({ matchFound: false });
-        console.log("Match?" + this.state.matchFound);
+    
+    handleNoMatch = () => {
+        console.log("they don't match")
+    //    this.setState({ matchFound: false });
+    //    this.setState({ flippedCards: 0 });
     }
+
+    handleMatch = () => {
+        console.log("they match!")
+        // this.setState({ matchFound: true });
+        // this.setState({ flippedOne: '' });
+        // this.setState({ flippedTwo: '' });
+        // this.setState({ matchFound: false })
+        this.setState({ flippedCards: 0 })
+
+    }
+
+    checkForMatch = () => {
+        console.log(this.state.flippedOne + "  " + this.state.flippedTwo);
+        this.state.flippedOne === this.state.flippedTwo ?
+        this.handleMatch() :
+        this.handleNoMatch();
+    };
 
     handleFlip = (event) => {
+        const cardValue = event.target.dataset.value;
+        this.state.flippedCards === 0 ?  //if flipedOne in state is still blank...
+        this.setState({ flippedOne: cardValue }) : //assign clicked card to flippedOne, otherwise
+        this.setState({ flippedTwo: cardValue });  //assign clicked card to flippedTwo
         this.setState({ flippedCards: this.state.flippedCards + 1 });  //add one to number of flipped cards
-        console.log("Value read in Board.js: " + event.target.dataset.value);
-        this.state.flippedOne === '' ?  //if flipedOne in state is still blank...
-        this.setState({ flippedOne: event.target.dataset.value }) : //assign clicked card to flippedOne, otherwise
-        this.setState({ flippedTwo: event.target.dataset.value });  //assign clicked card to flippedTwo
-        
-        if(this.state.flippedTwo !== '') { 
-        setTimeout( () => this.checkMatch(), 1000);
-        }
-
-    }
-
-    componentWillMount() {
-        this.shuffleArray(this.state.deck);
+    
+        this.checkForMatch();
     };
+
+    // componentWillMount() {
+    // this.shuffleArray(this.state.deck);
+    // };
 
     render(props) {
         return(
@@ -87,7 +101,7 @@ class Board extends React.Component {
                             value={data.substr(14).slice(0, -14)}  //e.g. Ace, Ace
                             handleFlip={this.handleFlip}
                             matchFound={this.state.matchFound}
-                            twoFlipped={this.state.flippedTwo}
+                            flippedCards={this.state.flippedCards}
                         />
                         
                     ))}

@@ -67,11 +67,12 @@ class Board extends React.Component {
 
     }
 
-    checkForMatch = () => {
+    checkForMatch = () => {setTimeout(() => {
         console.log(this.state.flippedOne + "  " + this.state.flippedTwo);
         this.state.flippedOne === this.state.flippedTwo ?
         this.handleMatch() :
         this.handleNoMatch();
+    }, 1000);
     };
 
     handleFlip = (event) => {

@@ -52,23 +52,23 @@ class Board extends React.Component {
     };
     
     handleNoMatch = () => {
-        console.log("they don't match")
-    //    this.setState({ matchFound: false });
+       console.log("they don't match")
+       this.setState({ matchFound: false });
     //    this.setState({ flippedCards: 0 });
     }
 
     handleMatch = () => {
         console.log("they match!")
-        // this.setState({ matchFound: true });
+        this.setState({ matchFound: true });
         // this.setState({ flippedOne: '' });
         // this.setState({ flippedTwo: '' });
         // this.setState({ matchFound: false })
-        this.setState({ flippedCards: 0 })
+        // this.setState({ flippedCards: 0 })
 
     }
 
     checkForMatch = () => {setTimeout(() => {
-        console.log(this.state.flippedOne + "  " + this.state.flippedTwo);
+        console.log(this.state.flippedOne + "  " + this.state.flippedTwo + " cards flipped so far: " + this.state.flippedCards);
         this.state.flippedOne === this.state.flippedTwo ?
         this.handleMatch() :
         this.handleNoMatch();
@@ -76,13 +76,14 @@ class Board extends React.Component {
     };
 
     handleFlip = (event) => {
-        const cardValue = event.target.dataset.value;
-        this.state.flippedCards === 0 ?  //if flipedOne in state is still blank...
-        this.setState({ flippedOne: cardValue }) : //assign clicked card to flippedOne, otherwise
-        this.setState({ flippedTwo: cardValue });  //assign clicked card to flippedTwo
-        this.setState({ flippedCards: this.state.flippedCards + 1 });  //add one to number of flipped cards
-    
-        this.checkForMatch();
+            const cardValue = event.target.dataset.value;
+
+            this.state.flippedCards === 0 ?  //if flipedOne in state is still blank...
+                this.setState({ flippedOne: cardValue }) : //assign clicked card to flippedOne, otherwise
+                this.setState({ flippedTwo: cardValue });  //assign clicked card to flippedTwo
+            this.setState({ flippedCards: this.state.flippedCards + 1 });  //add one to number of flipped cards
+        
+            this.checkForMatch();
     };
 
     // componentWillMount() {
@@ -100,6 +101,7 @@ class Board extends React.Component {
                             src={data} 
                             cardId={data.substr(14).slice(0, -13)} //e.g. Ace1, Ace2    
                             value={data.substr(14).slice(0, -14)}  //e.g. Ace, Ace
+                            ref={data.substr(14).slice(0, -14)}  //e.g. Ace, Ace
                             handleFlip={this.handleFlip}
                             matchFound={this.state.matchFound}
                             flippedCards={this.state.flippedCards}

@@ -44,7 +44,7 @@ hideMe = () => {
                     alt=""
                     data-value={this.props.value}
                     onClick={ (event) => (
-                        this.props.flippedCards < 3 ?
+                        this.props.flippedCards < 2 ?
                         this.flipCard(event) :
                         null 
                     )}
@@ -56,7 +56,7 @@ hideMe = () => {
                     style={{ 
                         transform: "rotateY(180deg)",
                     }}
-                    onClick={this.unflipCard}
+                    onClick={this.hideMe}
                 />
             </div>
         )

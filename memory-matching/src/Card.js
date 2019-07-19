@@ -3,27 +3,29 @@ import CardBack from './media/gray_back.png';
 import './card.css'
 
 class Card extends Component {
-    state={ 
-        flipped: false,
-        visibility: "visible",
-        matched: false,
+    constructor(props) {
+		super(props);
+        this.state={ 
+            flipped: this.props.flipped,
+            visibility: "visible",
+            matched: false,
+        };
     }
 
     
-flipCard = (event) => {
-    this.setState({ flipped: true });
-    this.props.handleFlip(event);
-};
+    flipCard = (event) => {
+        this.setState({ flipped: true });
+        this.props.handleFlip(event);
+    };
 
-unflipCard = () => {
-    this.props.flippedCards === 0 ?
-    this.setState({ flipped: false }) :
-    this.setState({ flipped: true }) ;
-};
+    // unflipCard = () => {
+    //     // this.setState({ flipped: false });
+    //     alert("you unflipped it")
+    // };
 
-hideMe = () => {
-    this.setState({ matched: "true" })
-}
+    hideMe = () => {
+        this.setState({ matched: "true" })
+    }
 
 
 
@@ -44,7 +46,7 @@ hideMe = () => {
                     alt=""
                     data-value={this.props.value}
                     onClick={ (event) => (
-                        this.props.flippedCards < 2 ?
+                        this.props.flippedCards < 2 ? //prevents flipping more than 2 cards
                         this.flipCard(event) :
                         null 
                     )}
@@ -56,7 +58,7 @@ hideMe = () => {
                     style={{ 
                         transform: "rotateY(180deg)",
                     }}
-                    onClick={this.hideMe}
+                    onClick={this.props.unflipCard}
                 />
             </div>
         )

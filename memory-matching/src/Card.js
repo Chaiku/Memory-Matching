@@ -3,10 +3,15 @@ import CardBack from './media/gray_back.png';
 import './card.css'
 
 class Card extends Component {
-    state={ flipped: false }
+    state={ 
+        flipped: false
+     }
     
-flipCard = (event) => {
+onCardFlip = (event) => {
     this.setState({ flipped: true })
+    console.log(this.props.cardId);
+    this.props.flippedCards.push(this.props.cardId);
+
 };
 
     render(props) {
@@ -19,7 +24,7 @@ flipCard = (event) => {
                 style={{transform: `${this.state.flipped ? "rotateY(180deg)" : null}`}}
                 >
                 <img src={CardBack}
-                    onClick={this.flipCard}
+                    onClick={this.onCardFlip}
                     className="cardBack" 
                     alt=""
                 />

@@ -35,7 +35,13 @@ class Board extends React.Component {
             Nine1, Nine2, Eight1, Eight2, Seven1,
             Seven2, Six1, Six2, Five1, Five2
         ],
+        flippedCards: [],
+        onCardFlip: function(card) {
+            this.flippedCards.push(card)
+            console.log(this.flippedCards);
+        }
     };
+
 
     shuffleArray = (array) => {
         let i = 0;
@@ -59,6 +65,10 @@ class Board extends React.Component {
                             src={d} 
                             cardId={d.substr(14).slice(0, -13)} 
                             value={d.substr(14).slice(0, -14)}
+                            flipped={false}
+                            flipCard={this.value}
+                            onCardFlip={this.onCardFlip}
+                            card={this.value}
                         />
                     ))};
                 </div>

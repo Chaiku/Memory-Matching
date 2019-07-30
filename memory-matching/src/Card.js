@@ -7,7 +7,7 @@ class Card extends Component {
 		super(props);
         this.state={ 
             flipped: this.props.flipped,
-            visibility: "visible",
+            isHidden: false,
             matched: false,
         };
     }
@@ -18,13 +18,13 @@ class Card extends Component {
         this.props.handleFlip(event);
     };
 
-    // unflipCard = () => {
-    //     // this.setState({ flipped: false });
-    //     alert("you unflipped it")
-    // };
+    unflipCard = () => {
+        this.setState({ flipped: false });
+    };
 
     hideMe = () => {
-        this.setState({ matched: "true" })
+        this.setState({ isHidden: "true" });
+        
     }
 
 
@@ -38,7 +38,7 @@ class Card extends Component {
                 data-value={this.props.value}
                 style={{
                     transform: `${this.state.flipped ? "rotateY(180deg)" : "rotate(0deg)" }`,
-                    visibility: `${this.state.matched ? "hidden" : "visible" }` 
+                    visibility: `${this.state.isHidden ? "hidden" : "visible" }` 
                 }}
                 >
                 <img src={CardBack}
@@ -58,7 +58,7 @@ class Card extends Component {
                     style={{ 
                         transform: "rotateY(180deg)",
                     }}
-                    onClick={this.props.unflipCard}
+                    onClick={this.hideMe}
                 />
             </div>
         )

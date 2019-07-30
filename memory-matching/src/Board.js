@@ -28,19 +28,26 @@ const boardStyle = {
 }
 
 class Board extends React.Component {
-    state = {
-        deck: [
-            Ace1, Ace2, King1, King2, Queen1,
-            Queen2, Jack1, Jack2, Ten1, Ten2,
-            Nine1, Nine2, Eight1, Eight2, Seven1,
-            Seven2, Six1, Six2, Five1, Five2
-        ],
-        flipped: false,
-        flippedCards: 0,
-        flippedOne: 'x',
-        flippedTwo: '',
-        matchFound: false,
-    };
+    constructor(props){
+        super(props);
+        this.cardElement = React.createRef();
+    
+        this.state = {
+            deck: [
+                Ace1, Ace2, King1, King2, Queen1,
+                Queen2, Jack1, Jack2, Ten1, Ten2,
+                Nine1, Nine2, Eight1, Eight2, Seven1,
+                Seven2, Six1, Six2, Five1, Five2
+            ],
+            flipped: null,
+            flippedCards: 0,
+            flippedOne: '',
+            flippedStoreOne: '',
+            flippedTwo: '',
+            flippedStoreTwo: '',
+            matchFound: false,
+        };
+    }
 
     shuffleArray = (array) => {
         let i = 0;
@@ -50,36 +57,35 @@ class Board extends React.Component {
         };
     };
     
-    unflipCard = () => {
-        // this.setState({ flipped: false });
-        alert("you unflipped it")
-    };
-    
-    handleNoMatch = () => (
-        this.state.flippedCards > 1 ?
-        // console.log("they don't match") :
-        this.unflipCard() :
-        null
-    )
+    handleNoMatch = () => {
+        console.log("they don't match");
+        this.cardElement.current.unflipCard();
+        this.setState({ flipped: false })
+    }
 
     handleMatch = () => {
         console.log("they match!")
+        console.log(this.state.flippedStoreOne);
+        console.log(this.state.flippedStoreTwo);
     }
 
     checkForMatch = () => {setTimeout(() => {
         console.log(this.state.flippedOne + "  " + this.state.flippedTwo + " cards flipped so far: " + this.state.flippedCards);
-        this.state.flippedOne === this.state.flippedTwo ?
-        this.handleMatch() :
+        if(this.state.flippedOne === this.state.flippedTwo && this.state.flippedCards > 1) {
+        this.handleMatch();
+        }else if(this.state.flippedOne !== this.state.flippedTwo && this.state.flippedCards > 1) {
         this.handleNoMatch();
+        }
     }, 1000);
     };
 
     handleFlip = (event) => {
-            const cardValue = event.target.dataset.value;
+            const cardValue = event.target.dataset.value.slice(0,-1);
+            const cardStoreValue = event.target.dataset.value;
 
             this.state.flippedCards === 0 ?  //if flipedOne in state is still blank...
-                this.setState({ flippedOne: cardValue }) : //assign clicked card to flippedOne, otherwise
-                this.setState({ flippedTwo: cardValue });  //assign clicked card to flippedTwo
+                this.setState({ flippedOne: cardValue, flippedStoreOne: cardStoreValue }): //assign clicked card to flippedOne, and otherwise
+                this.setState({ flippedTwo: cardValue, flippedStoreTwo: cardStoreValue });  //assign clicked card to flippedTwo
             this.setState({ flippedCards: this.state.flippedCards + 1 });  //add one to number of flipped cards
         
             this.checkForMatch();
@@ -96,12 +102,12 @@ class Board extends React.Component {
                     {this.state.deck.map(data => (
                         <Card   
                             // ref={data.substr(14).slice(0, -14)}  //e.g. Ace, Ace
-                            ref="card"
+                            ref={this.cardElement}
                             key={data} 
                             keyProp={data}
                             src={data} 
-                            cardId={data.substr(14).slice(0, -13)} //e.g. Ace1, Ace2    
-                            value={data.substr(14).slice(0, -14)}  //e.g. Ace, Ace
+                            id={data.substr(14).slice(0, -13)} //e.g. Ace1, Ace2    
+                            value={data.substr(14).slice(0, -13)}  //e.g. Ace, Ace
                             unflipCard={this.unflipCard}
                             handleFlip={this.handleFlip}
                             matchFound={this.state.matchFound}

@@ -34,7 +34,7 @@ class Card extends Component {
             <div 
                 key={this.props.keyProp} 
                 className="card" 
-                id={this.props.cardId}
+                id={this.props.id}
                 data-value={this.props.value}
                 style={{
                     transform: `${this.state.flipped ? "rotateY(180deg)" : "rotate(0deg)" }`,

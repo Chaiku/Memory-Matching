@@ -57,22 +57,25 @@ class Board extends React.Component {
             [array[i], array[j]] = [array[j], array[i]];
         };
     };
-    
-    handleNoMatch = () => {
-        console.log("they don't match");
-        this.cardElement.current.unflipCard();
-        this.setState({ flipped: false })
-    }
 
     resetMatch = () => {
-        this.setState({ flippedCards: 0,
-                        flippedOne: '',
+        this.setState({ flippedOne: '',
                         flippedStoreOne: '',
                         flippedTwo: '',
                         flippedStoreTwo: '',
-                        matchFound: false,
-                        flipped: null })
+                        flipped: false,
+                        flippedCards: 0 })
         }
+    
+    handleNoMatch = () => {
+        console.log("they don't match");
+        const remove1 = document.getElementById(this.state.flippedStoreOne);
+        const remove2 = document.getElementById(this.state.flippedStoreTwo);
+        
+        remove1.style.transform = 'rotateY(0deg)';
+        remove2.style.transform = 'rotateY(0deg)';
+        this.resetMatch();
+    }
 
     handleMatch = () => {
         console.log("they match!")
@@ -83,6 +86,7 @@ class Board extends React.Component {
         remove1.style.visibility = "hidden";
         remove2.style.visibility = "hidden";
         this.resetMatch();
+        this.setState({ matchFound: false });
 
     }
 
@@ -125,10 +129,11 @@ class Board extends React.Component {
                             src={data} 
                             id={data.substr(14).slice(0, -13)} //e.g. Ace1, Ace2    
                             value={data.substr(14).slice(0, -13)}  //e.g. Ace1, Ace2
-                            unflipCard={this.unflipCard}
+                            handleUnFlip={this.handleUnFlip}
                             handleFlip={this.handleFlip}
                             matchFound={this.state.matchFound}
                             flippedCards={this.state.flippedCards}
+                            flipped={this.state.flipped}
                         />
                         
                     ))}

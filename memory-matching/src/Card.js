@@ -18,14 +18,11 @@ class Card extends Component {
         this.props.handleFlip(event);
     };
 
-    unflipCard = () => {
-        this.setState({ flipped: false });
-    };
 
-    hideMe = () => {
-        this.setState({ isHidden: "true" });
+    // hideMe = () => {
+    //     this.setState({ isHidden: "true" });
         
-    }
+    // }
 
 
 
@@ -56,9 +53,8 @@ class Card extends Component {
                     className="cardFace" 
                     alt=""
                     style={{ 
-                        transform: "rotateY(180deg)",
+                        transform: `rotateY(180deg)`,
                     }}
-                    onClick={this.hideMe}
                 />
             </div>
         )

@@ -49,7 +49,6 @@ class Board extends React.Component {
         };
     }
 
-
     shuffleArray = (array) => {
         let i = 0;
         for (i = array.length - 1; i > 0; i--) {
@@ -64,26 +63,10 @@ class Board extends React.Component {
         this.setState({ flipped: false })
     }
 
-    resetMatch = () => {
-        this.setState({ flippedCards: 0,
-                        flippedOne: '',
-                        flippedStoreOne: '',
-                        flippedTwo: '',
-                        flippedStoreTwo: '',
-                        matchFound: false,
-                        flipped: null })
-        }
-
     handleMatch = () => {
         console.log("they match!")
         console.log(this.state.flippedStoreOne);
         console.log(this.state.flippedStoreTwo);
-        const remove1 = document.getElementById(this.state.flippedStoreOne);
-        const remove2 = document.getElementById(this.state.flippedStoreTwo);
-        remove1.style.visibility = "hidden";
-        remove2.style.visibility = "hidden";
-        this.resetMatch();
-
     }
 
     checkForMatch = () => {setTimeout(() => {

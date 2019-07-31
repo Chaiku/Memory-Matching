@@ -28,21 +28,6 @@ const boardStyle = {
 }
 
 class Board extends React.Component {
-<<<<<<< HEAD
-    state = {
-        deck: [
-            Ace1, Ace2, King1, King2, Queen1,
-            Queen2, Jack1, Jack2, Ten1, Ten2,
-            Nine1, Nine2, Eight1, Eight2, Seven1,
-            Seven2, Six1, Six2, Five1, Five2
-        ],
-        flippedCards: [],
-        onCardFlip: function(card) {
-            this.flippedCards.push(card)
-            console.log(this.flippedCards);
-        }
-    };
-=======
     constructor(props){
         super(props);
         this.cardElement = React.createRef();
@@ -63,7 +48,6 @@ class Board extends React.Component {
             matchFound: false,
         };
     }
->>>>>>> a98b601fd6cdb7fbc8896af58be7628dff022e85
 
 
     shuffleArray = (array) => {
@@ -80,10 +64,26 @@ class Board extends React.Component {
         this.setState({ flipped: false })
     }
 
+    resetMatch = () => {
+        this.setState({ flippedCards: 0,
+                        flippedOne: '',
+                        flippedStoreOne: '',
+                        flippedTwo: '',
+                        flippedStoreTwo: '',
+                        matchFound: false,
+                        flipped: null })
+        }
+
     handleMatch = () => {
         console.log("they match!")
         console.log(this.state.flippedStoreOne);
         console.log(this.state.flippedStoreTwo);
+        const remove1 = document.getElementById(this.state.flippedStoreOne);
+        const remove2 = document.getElementById(this.state.flippedStoreTwo);
+        remove1.style.visibility = "hidden";
+        remove2.style.visibility = "hidden";
+        this.resetMatch();
+
     }
 
     checkForMatch = () => {setTimeout(() => {
@@ -116,18 +116,6 @@ class Board extends React.Component {
         return(
             <React.Fragment>
                 <div style={boardStyle}>
-<<<<<<< HEAD
-                    {this.state.deck.map(d => (
-                        <Card 
-                            key={d} 
-                            src={d} 
-                            cardId={d.substr(14).slice(0, -13)} 
-                            value={d.substr(14).slice(0, -14)}
-                            flipped={false}
-                            flipCard={this.value}
-                            onCardFlip={this.onCardFlip}
-                            card={this.value}
-=======
                     {this.state.deck.map(data => (
                         <Card   
                             // ref={data.substr(14).slice(0, -14)}  //e.g. Ace, Ace
@@ -136,12 +124,11 @@ class Board extends React.Component {
                             keyProp={data}
                             src={data} 
                             id={data.substr(14).slice(0, -13)} //e.g. Ace1, Ace2    
-                            value={data.substr(14).slice(0, -13)}  //e.g. Ace, Ace
+                            value={data.substr(14).slice(0, -13)}  //e.g. Ace1, Ace2
                             unflipCard={this.unflipCard}
                             handleFlip={this.handleFlip}
                             matchFound={this.state.matchFound}
                             flippedCards={this.state.flippedCards}
->>>>>>> a98b601fd6cdb7fbc8896af58be7628dff022e85
                         />
                         
                     ))}

@@ -49,7 +49,6 @@ class Board extends React.Component {
         };
     }
 
-
     shuffleArray = (array) => {
         let i = 0;
         for (i = array.length - 1; i > 0; i--) {
@@ -68,17 +67,15 @@ class Board extends React.Component {
         }
     
     handleNoMatch = () => {
-        console.log("they don't match");
         const remove1 = document.getElementById(this.state.flippedStoreOne);
         const remove2 = document.getElementById(this.state.flippedStoreTwo);
         
-        remove1.style.transform = 'rotateY(0deg)';
-        remove2.style.transform = 'rotateY(0deg)';
+        remove1.setAttribute("style", "transform: rotate(0deg);");
+        remove2.setAttribute("style", "transform: rotate(0deg);");
         this.resetMatch();
     }
 
     handleMatch = () => {
-        console.log("they match!")
         console.log(this.state.flippedStoreOne);
         console.log(this.state.flippedStoreTwo);
         const remove1 = document.getElementById(this.state.flippedStoreOne);

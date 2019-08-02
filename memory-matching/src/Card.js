@@ -16,6 +16,7 @@ class Card extends Component {
     flipCard = (event) => {
         this.setState({ flipped: true });
         this.props.handleFlip(event);
+        setTimeout(() => this.setState ({ flipped: false }), 1500);
     };
 
 

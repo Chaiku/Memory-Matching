@@ -16,16 +16,14 @@ class Card extends Component {
     flipCard = (event) => {
         this.setState({ flipped: true });
         this.props.handleFlip(event);
+        setTimeout(() => this.setState ({ flipped: false }), 1500);
     };
 
-    unflipCard = () => {
-        this.setState({ flipped: false });
-    };
 
-    hideMe = () => {
-        this.setState({ isHidden: "true" });
+    // hideMe = () => {
+    //     this.setState({ isHidden: "true" });
         
-    }
+    // }
 
 
 
@@ -56,9 +54,8 @@ class Card extends Component {
                     className="cardFace" 
                     alt=""
                     style={{ 
-                        transform: "rotateY(180deg)",
+                        transform: `rotateY(180deg)`,
                     }}
-                    onClick={this.hideMe}
                 />
             </div>
         )

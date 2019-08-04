@@ -3,29 +3,13 @@ import CardBack from './media/gray_back.png';
 import './card.css'
 
 class Card extends Component {
-    constructor(props) {
-		super(props);
-        this.state={ 
-            flipped: this.props.flipped,
-            isHidden: false,
-            matched: false,
-        };
-    }
-
     
     flipCard = (event) => {
+        document.getElementById(this.props.id).style.transform = "rotateY(180deg)";
         this.setState({ flipped: true });
         this.props.handleFlip(event);
-        setTimeout(() => this.setState ({ flipped: false }), 1500);
+        // setTimeout(() => this.setState ({ flipped: false }), 1500);
     };
-
-
-    // hideMe = () => {
-    //     this.setState({ isHidden: "true" });
-        
-    // }
-
-
 
     render(props) {
         return(
@@ -34,10 +18,10 @@ class Card extends Component {
                 className="card" 
                 id={this.props.id}
                 data-value={this.props.value}
-                style={{
-                    transform: `${this.state.flipped ? "rotateY(180deg)" : "rotate(0deg)" }`,
-                    visibility: `${this.state.isHidden ? "hidden" : "visible" }` 
-                }}
+                // style={{
+                //     // transform: `${this.state.flipped ? "rotateY(180deg)" : "rotate(0deg)" }`,
+                //     visibility: `${this.state.isHidden ? "hidden" : "visible" }` 
+                // }}
                 >
                 <img src={CardBack}
                     className="cardBack" 

@@ -13,3 +13,22 @@
   font-size: calc(10px + 2vmin);
   color: white;
 }
+
+#playDiv {
+  height: 10vh;
+  text-align: center;
+  position: fixed;
+  top: 45vh;
+  left: 44vw;
+  z-index: 1000;
+}
+
+#playBtn {
+  height: 100%;
+  width: 20vw;
+  text-transform: uppercase;
+  border-radius: 50%;
+  background-color: antiquewhite;
+  color: #282c34;
+  
+}

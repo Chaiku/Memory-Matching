@@ -26,7 +26,7 @@ class Card extends Component {
                     }}
                     data-value={this.props.value}
                     onClick={ (event) => (
-                        this.props.flippedCards < 2 ? //prevents flipping more than 2 cards
+                        this.props.flippedCards < 2 && this.props.time > 0 ?
                         this.flipCard(event) :
                         null 
                     )}

@@ -2,7 +2,6 @@ import React from 'react';
 import './board.css';
 import Card from './Card';
 import PlayAgain from './PlayAgain';
-import Pyro from './Pyro';
 import Ace1 from './media/Ace1.png';
 import King1 from './media/King1.png';
 import Queen1 from './media/Queen1.png';
@@ -29,22 +28,23 @@ const boardStyle = {
 }
 
 class Board extends React.Component {
-    state = {
-        deck: [
-            Ace1, Ace2, King1, King2, Queen1,
-            Queen2, Jack1, Jack2, Ten1, Ten2,
-            Nine1, Nine2, Eight1, Eight2, Seven1,
-            Seven2, Six1, Six2, Five1, Five2
-        ],
-        flippedCards: 0,
-        flippedOne: '',
-        flippedStoreOne: '',
-        flippedTwo: '',
-        flippedStoreTwo: '',
-        matchesFound: 0,
-    };
-    
-
+    constructor(props) {
+        super(props);   
+        this.state = {
+            deck: [
+                Ace1, Ace2, King1, King2, Queen1,
+                Queen2, Jack1, Jack2, Ten1, Ten2,
+                Nine1, Nine2, Eight1, Eight2, Seven1,
+                Seven2, Six1, Six2, Five1, Five2
+            ],
+            flippedCards: 0,
+            flippedOne: '',
+            flippedStoreOne: '',
+            flippedTwo: '',
+            flippedStoreTwo: '',
+            matchesFound: this.props.matchesFound,
+        };
+    }
     shuffleArray = (array) => {
         let i = 0;
         for (i = array.length - 1; i > 0; i--) {
@@ -54,16 +54,7 @@ class Board extends React.Component {
     };
 
     resetMatch = () => {
-        const playAgain = document.getElementById("playDiv");
-        const pyro = document.getElementById('pyro');
-        setTimeout(() => {   
-            if (this.state.matchesFound === 10) {
-                pyro.style.display = "block"
-                playAgain.style.display = "block";
-            } else {
-            playAgain.style.display = "none";
-            }
-        }, 500);
+        // this.props.resetMatch();
         this.setState({ flippedOne: '',
                         flippedStoreOne: '',
                         flippedTwo: '',
@@ -92,8 +83,7 @@ class Board extends React.Component {
     }
 
     handleMatch = () => {
-        this.setState({ matchesFound: this.state.matchesFound + 1 });
-        
+        this.props.addMatch();                
         const remove1 = document.getElementById(this.state.flippedStoreOne);
         const remove2 = document.getElementById(this.state.flippedStoreTwo);
         setTimeout(() => {
@@ -106,7 +96,7 @@ class Board extends React.Component {
     checkForMatch = () => {
         setTimeout(() => {
             if(this.state.flippedOne === this.state.flippedTwo && this.state.flippedCards > 1) {
-            this.handleMatch();
+                this.handleMatch();
             }else if(this.state.flippedOne !== this.state.flippedTwo && this.state.flippedCards > 1) {
             this.handleNoMatch();
             }
@@ -121,7 +111,6 @@ class Board extends React.Component {
                 this.setState({ flippedOne: cardValue, flippedStoreOne: cardStoreValue }): //assign clicked card to flippedOne, and otherwise
                 this.setState({ flippedTwo: cardValue, flippedStoreTwo: cardStoreValue });  //assign clicked card to flippedTwo
             this.setState({ flippedCards: this.state.flippedCards + 1 });  //add one to number of flipped cards
-
             this.checkForMatch();
     };
 
@@ -135,22 +124,18 @@ class Board extends React.Component {
                 <div style={boardStyle}>
                     {this.state.deck.map(data => (
                         <Card   
-                            // ref={data.substr(14).slice(0, -14)}  //e.g. Ace, Ace
-                            ref={this.cardElement}
                             key={data} 
                             keyProp={data}
                             src={data} 
                             id={data.substr(14).slice(0, -13)} //e.g. Ace1, Ace2    
                             value={data.substr(14).slice(0, -13)}  //e.g. Ace1, Ace2
-                            handleUnFlip={this.handleUnFlip}
+                            time={this.props.time}
                             handleFlip={this.handleFlip}
                             flippedCards={this.state.flippedCards}
                             flipped={this.state.flipped}
                         />                        
                     ))}
                 </div>
-                <PlayAgain/>
-                <Pyro/>
             </React.Fragment>
         )
     }

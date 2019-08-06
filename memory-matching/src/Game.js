@@ -8,7 +8,8 @@ class Game extends React.Component {
   state = {
     time: 90,
     gameStarted: false,
-    matchesFound: 0
+    matchesFound: 0,
+    // winningScore: {this.state.time} * 3.14159265359,
   }
   
   addMatch = () => {
@@ -41,7 +42,7 @@ class Game extends React.Component {
     const pyro = document.getElementById('pyro');
     const youLose = document.getElementById('youLose');
     const timer = document.getElementById('timer');
-
+    const youWin = document.getElementById('youWin');
     if(this.state.matchesFound < 10 && this.state.time > 0 ) {
       setTimeout(() => {
         this.subtractSecond();
@@ -50,6 +51,8 @@ class Game extends React.Component {
       setTimeout(() => {
         pyro.style.display = "block"
         playAgain.style.display = "block";
+        youWin.style.display="block";
+        timer.style.display = "none"
       }, 500);
     } else if(this.state.matchesFound < 10 && this.state.time === 0){
       playAgain.style.display = "block";
@@ -80,15 +83,19 @@ class Game extends React.Component {
         className="game"
         onClick={this.handleClick}
         >
-        <header 
-          id="timer"
-          style={{display: 'none'}}
-          >{this.state.time}</header>
-        <header id="youLose" style={{ display: 'none' }}>Time is out, sucka.</header>
         <header id="gameHead">
           <h1><u>Memory Match</u></h1>
           <p>Click the cards to find their matching counterpart!</p>
         </header>
+        <header 
+          id="timer"
+          style={{display: 'none'}}
+          >{this.state.time}</header>
+        <header
+          id="youWin"
+          style={{ display: 'none' }}>Your Score: {this.state.time}</header>
+        <header id="youLose" style={{ display: 'none' }}>Time is out, sucka.</header>
+
         
         <Board 
           addMatch={this.addMatch}

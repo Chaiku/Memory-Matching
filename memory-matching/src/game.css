@@ -3,6 +3,7 @@
   background-color: #282c34;
 }
 
+#youWin,
 #youLose,
 #timer,
 #gameHead {
@@ -15,7 +16,7 @@
   font-size: calc(10px + 2vmin);
   color: white;
 }
-
+#youWin,
 #youLose {
   font-size: 7vh;
 }
@@ -27,7 +28,7 @@
   height: 10vh;
   text-align: center;
   position: fixed;
-  top: 45vh;
+  bottom: 15vh;
   left: 38.5vw;
   z-index: 1000;
 }

@@ -125,7 +125,7 @@ class Board extends React.Component {
                     {this.state.deck.map(data => (
                         <Card   
                             key={data} 
-                            keyProp={data}
+                            // keyProp={data}
                             src={data} 
                             id={data.substr(14).slice(0, -13)} //e.g. Ace1, Ace2    
                             value={data.substr(14).slice(0, -13)}  //e.g. Ace1, Ace2

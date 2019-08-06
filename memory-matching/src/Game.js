@@ -1,15 +1,20 @@
 import React from 'react';
 import './game.css';
 import Board from './Board';
+import PickLevel from './PickLevel';
+import GameHead from './GameHead';
+import Timer from './Timer';
+import YouWin from './YouWin';
+import YouLose from './YouLose';
 import Pyro from './Pyro';
 import PlayAgain from './PlayAgain';
+import { tsImportEqualsDeclaration } from '@babel/types';
 
 class Game extends React.Component {
   state = {
-    time: 90,
+    time: 60,
     gameStarted: false,
     matchesFound: 0,
-    // winningScore: {this.state.time} * 3.14159265359,
   }
   
   addMatch = () => {
@@ -69,35 +74,43 @@ class Game extends React.Component {
     this.startTimer();
   };
 
-  handleClick = () => {
+  startGame = () => {
+    document.getElementById('pickLevel').style.display = 'none';
     if(this.state.gameStarted === false){
       this.setState({ gameStarted: true });
       this.openTimer();
     };
   };
-
+  pickEasy = () => {
+    this.setState({ time: 90 });
+    this.startGame();
+  }
+  pickMedium = () => {
+    this.setState({ time: 60 });
+    this.startGame();
+  }
+  pickDifficult = () => {
+    this.setState({ time: 45 });
+    this.startGame();
+  }
 
   render() {
     return (
       <div 
         className="game"
-        onClick={this.handleClick}
         >
-        <header id="gameHead">
-          <h1><u>Memory Match</u></h1>
-          <p>Click the cards to find their matching counterpart!</p>
-        </header>
-        <header 
-          id="timer"
-          style={{display: 'none'}}
-          >{this.state.time}</header>
-        <header
-          id="youWin"
-          style={{ display: 'none' }}>Your Score: {this.state.time}</header>
-        <header id="youLose" style={{ display: 'none' }}>Time is out, sucka.</header>
+        <PickLevel 
+          easy={this.pickEasy}
+          medium={this.pickMedium}
+          difficult={this.pickDifficult}/>
+        <GameHead/>
+        <Timer time={this.state.time}/>
+        <YouWin time={this.state.time}/>
+        <YouLose/>
 
         
         <Board 
+          onClick={this.startGame}
           addMatch={this.addMatch}
           resetMatch={this.resetMatch}
           time={this.state.time}/>

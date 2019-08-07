@@ -8,13 +8,15 @@ import YouWin from './YouWin';
 import YouLose from './YouLose';
 import Pyro from './Pyro';
 import PlayAgain from './PlayAgain';
-import { tsImportEqualsDeclaration } from '@babel/types';
 
 class Game extends React.Component {
   state = {
     time: 60,
     gameStarted: false,
     matchesFound: 0,
+    easyVal: 90,
+    mediumVal: 60,
+    difficultVal: 45
   }
   
   addMatch = () => {
@@ -76,21 +78,15 @@ class Game extends React.Component {
 
   startGame = () => {
     document.getElementById('pickLevel').style.display = 'none';
+    document.getElementById('gameBoard').style.display = 'inline-block';
     if(this.state.gameStarted === false){
       this.setState({ gameStarted: true });
       this.openTimer();
     };
   };
-  pickEasy = () => {
-    this.setState({ time: 90 });
-    this.startGame();
-  }
-  pickMedium = () => {
-    this.setState({ time: 60 });
-    this.startGame();
-  }
-  pickDifficult = () => {
-    this.setState({ time: 45 });
+  pickLevel = (event) => {
+    const setTime = event.target.value;
+    this.setState({ time: setTime });
     this.startGame();
   }
 
@@ -99,17 +95,14 @@ class Game extends React.Component {
       <div 
         className="game"
         >
-        <PickLevel 
-          easy={this.pickEasy}
-          medium={this.pickMedium}
-          difficult={this.pickDifficult}/>
-        <GameHead/>
-        <Timer time={this.state.time}/>
-        <YouWin time={this.state.time}/>
-        <YouLose/>
-
-        
-        <Board 
+        <div id="scoreboard">
+          <GameHead/>
+          <Timer time={this.state.time}/>
+          <YouWin time={this.state.time}/>
+          <YouLose/>
+        </div>
+        <PickLevel level={this.pickLevel}/>
+        <Board
           onClick={this.startGame}
           addMatch={this.addMatch}
           resetMatch={this.resetMatch}

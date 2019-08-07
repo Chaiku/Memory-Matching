@@ -2,29 +2,42 @@ import React, { Component } from 'react';
 import './game.css';
 
 class PickLevel extends Component {
+    state={
+        easyVal: 80,
+        mediumVal: 60,
+        difficultVal: 48
+    };
+
     render(props) {
         return(
-            <header id="pickLevel">
-                <h1><u>pick a level</u></h1>
+            <div 
+                id="pickLevel"
+                style={{
+                    position: 'fixed',
+                    top: '40vh',
+                    left: '10vw',
+                    textAlign: "center"
+                }} >
+                <h1 style={{ color: 'whitesmoke' }}>pick a level</h1>
                 <button 
-                    data='90'
+                    value={this.state.easyVal}
                     id="easy" 
-                    class="playBtn" 
-                    onClick={this.props.easy}
+                    className="playBtn" 
+                    onClick={this.props.level}
                 >easy peasy</button>
                 <button
-                    data='60' 
+                    value={this.state.mediumVal} 
                     id="medium" 
-                    class="playBtn" 
-                    onClick={this.props.medium}
+                    className="playBtn" 
+                    onClick={this.props.level}
                 >...meh</button>
                 <button 
-                    data='45'
+                    value={this.state.difficultVal}
                     id="difficult" 
-                    class="playBtn" 
-                    onClick={this.props.difficult}
+                    className="playBtn" 
+                    onClick={this.props.level}
                 >yikes!</button>
-            </header>
+            </div>
         )
     }       
 }

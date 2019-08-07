@@ -1,7 +1,6 @@
 import React from 'react';
 import './board.css';
 import Card from './Card';
-import PlayAgain from './PlayAgain';
 import Ace1 from './media/Ace1.png';
 import King1 from './media/King1.png';
 import Queen1 from './media/Queen1.png';
@@ -24,7 +23,8 @@ import Six2 from './media/Six2.png';
 import Five2 from './media/Five2.png';
 
 const boardStyle = {
-    width: "100vw"
+    width: "100vw",
+    display: 'none'
 }
 
 class Board extends React.Component {
@@ -89,7 +89,7 @@ class Board extends React.Component {
         setTimeout(() => {
             remove1.style.visibility = "hidden";
             remove2.style.visibility = "hidden";
-        }, 500);
+        }, 400);
         this.resetMatch();
     }
 
@@ -100,7 +100,7 @@ class Board extends React.Component {
             }else if(this.state.flippedOne !== this.state.flippedTwo && this.state.flippedCards > 1) {
             this.handleNoMatch();
             }
-        }, 1000);
+        }, 800);
     };
 
     handleFlip = (event) => {
@@ -108,20 +108,22 @@ class Board extends React.Component {
             const cardStoreValue = event.target.dataset.value; //e.g. "Ace1" or "Ace2"
 
             this.state.flippedCards === 0 ?  //if flipedOne in state is still blank...
-                this.setState({ flippedOne: cardValue, flippedStoreOne: cardStoreValue }): //assign clicked card to flippedOne, and otherwise
+                this.setState({ flippedOne: cardValue, flippedStoreOne: cardStoreValue }) : //assign clicked card to flippedOne, and otherwise
                 this.setState({ flippedTwo: cardValue, flippedStoreTwo: cardStoreValue });  //assign clicked card to flippedTwo
             this.setState({ flippedCards: this.state.flippedCards + 1 });  //add one to number of flipped cards
             this.checkForMatch();
     };
 
-    componentWillMount() {
-    this.shuffleArray(this.state.deck);
-    };
+    // componentWillMount() {
+    // this.shuffleArray(this.state.deck);
+    // };
 
     render(props) {
         return(
             <React.Fragment>
-                <div style={boardStyle}>
+                <div 
+                    id="gameBoard"
+                    style={boardStyle}>
                     {this.state.deck.map(data => (
                         <Card   
                             key={data} 

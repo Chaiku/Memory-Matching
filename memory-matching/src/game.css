@@ -38,6 +38,7 @@ body {
   height: 10vh;
   width: 23vw;
   text-transform: uppercase;
+  font-weight: 800;
   border-radius: 50%;
   background-color: whitesmoke;
   color: #282c34;

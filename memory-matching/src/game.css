@@ -1,14 +1,16 @@
-.game {
-  text-align: center;
+body {
   background-color: #282c34;
+  overflow-y: scroll;
 }
 
+.game {
+  text-align: center;
+}
 #youWin,
 #youLose,
 #timer,
 #gameHead {
-  background-color: #282c34;
-  height: 22vh;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -33,12 +35,13 @@
   z-index: 1000;
 }
 
-#playBtn {
-  height: 100%;
+.playBtn {
+  height: 10vh;
   width: 23vw;
   text-transform: uppercase;
+  font-weight: 800;
   border-radius: 50%;
   background-color: whitesmoke;
   color: #282c34;
-  
+  margin: 0 2vw 2vh;
 }

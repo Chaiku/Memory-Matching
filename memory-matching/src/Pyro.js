@@ -12,14 +12,18 @@ class Pyro extends Component {
     render(props) {
         return(
             <div 
-            class="pyro"
+            className="pyro"
             id="pyro"
             style={{
                 zIndex: 0,
-                display: 'none'
+                display: 'none',
+                width: '100vw',
+                height: '100vh',
+                position: 'fixed',
+                top: 0
             }}>
-                <div class="before"></div>
-                <div class="after"></div>
+                <div className="before"></div>
+                <div className="after"></div>
             </div>
         )
     }

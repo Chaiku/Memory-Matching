@@ -1,7 +1,7 @@
 import React from 'react';
 import './board.css';
+import Discard from './Discard';
 import Card from './Card';
-import PlayAgain from './PlayAgain';
 import Ace1 from './media/Ace1.png';
 import King1 from './media/King1.png';
 import Queen1 from './media/Queen1.png';
@@ -24,7 +24,8 @@ import Six2 from './media/Six2.png';
 import Five2 from './media/Five2.png';
 
 const boardStyle = {
-    width: "100vw"
+    width: "100vw",
+    display: 'none'
 }
 
 class Board extends React.Component {
@@ -44,74 +45,85 @@ class Board extends React.Component {
             flippedStoreTwo: '',
             matchesFound: this.props.matchesFound,
         };
-    }
-    shuffleArray = (array) => {
-        let i = 0;
-        for (i = array.length - 1; i > 0; i--) {
-            let j = Math.floor(Math.random() * (i + 1));
-            [array[i], array[j]] = [array[j], array[i]];
-        };
     };
 
     resetMatch = () => {
-        // this.props.resetMatch();
         this.setState({ flippedOne: '',
                         flippedStoreOne: '',
+                        flippedOneFace: '',
                         flippedTwo: '',
                         flippedStoreTwo: '',
+                        flippedTwoFace: '',
                         flippedCards: 0,
                      })
     }
     
     handleNoMatch = () => {
         const unmatched1 = document.getElementById(this.state.flippedStoreOne);
-        const unmatched2 = document.getElementById(this.state.flippedStoreTwo);
+        const unmatched2 = document.getElementById(this.state.flippedStoreTwo);        
+        const unmatched1X = document.getElementById(`${this.state.flippedStoreOne}X`);
+        const unmatched2X = document.getElementById(`${this.state.flippedStoreTwo}X`);        
+
         setTimeout(() => {
-            unmatched1.classList.add("shake");
-            unmatched2.classList.add("shake");
-        }, 200);        
+            unmatched1X.style.visibility = "visible";
+            unmatched2X.style.visibility = "visible";
+        }, 500);        
         setTimeout(() => {
-            unmatched1.setAttribute("style", "transform: rotate(0deg);");
-            unmatched2.setAttribute("style", "transform: rotate(0deg);");
+            // unmatched1.classList.remove("shake");
+            // unmatched2.classList.remove("shake");
+            unmatched1X.style.visibility = "hidden";
+            unmatched2X.style.visibility = "hidden";
+        }, 999);
+        setTimeout(() => {
+            unmatched1.style.transform = 'rotate(0deg)';
+            unmatched2.style.transform = 'rotate(0deg)';
         }, 1000);
-        setTimeout(() => {
-            unmatched1.classList.remove("shake")
-            unmatched2.classList.remove("shake")
-        }, 700);
 
         this.resetMatch();
     }
 
     handleMatch = () => {
-        this.props.addMatch();                
+        this.props.addMatch();  //adds a number to state.matchesFound in Game.js           
         const remove1 = document.getElementById(this.state.flippedStoreOne);
-        const remove2 = document.getElementById(this.state.flippedStoreTwo);
+        const remove2 = document.getElementById(this.state.flippedStoreTwo); 
+        const discard = document.getElementById(`discarded${this.state.flippedOne}`);      
         setTimeout(() => {
             remove1.style.visibility = "hidden";
             remove2.style.visibility = "hidden";
-        }, 500);
+            discard.style.visibility = "visible"
+        }, 400);
         this.resetMatch();
     }
 
     checkForMatch = () => {
-        setTimeout(() => {
-            if(this.state.flippedOne === this.state.flippedTwo && this.state.flippedCards > 1) {
-                this.handleMatch();
-            }else if(this.state.flippedOne !== this.state.flippedTwo && this.state.flippedCards > 1) {
-            this.handleNoMatch();
-            }
-        }, 1000);
+        if(this.state.flippedOne === this.state.flippedTwo) { //if the two flipped cards match
+            this.handleMatch();
+        }else{
+        this.handleNoMatch();
+        }
     };
 
     handleFlip = (event) => {
-            const cardValue = event.target.dataset.value.slice(0,-1); //e.g. "Ace"
-            const cardStoreValue = event.target.dataset.value; //e.g. "Ace1" or "Ace2"
+        const cardStoreValue = event.target.dataset.value; //e.g. "Ace1" or "Ace2"
+        const cardValue = event.target.dataset.value.slice(0,-1); //e.g. "Ace"
 
-            this.state.flippedCards === 0 ?  //if flipedOne in state is still blank...
-                this.setState({ flippedOne: cardValue, flippedStoreOne: cardStoreValue }): //assign clicked card to flippedOne, and otherwise
-                this.setState({ flippedTwo: cardValue, flippedStoreTwo: cardStoreValue });  //assign clicked card to flippedTwo
-            this.setState({ flippedCards: this.state.flippedCards + 1 });  //add one to number of flipped cards
-            this.checkForMatch();
+        this.state.flippedCards === 0 ?  //if no cards have been flipped yet...
+            this.setState({ flippedOne: cardValue, flippedStoreOne: cardStoreValue }) : //assign clicked card to flippedOne, otherwise...
+            this.setState({ flippedTwo: cardValue, flippedStoreTwo: cardStoreValue });  //assign clicked card to flippedTwo
+        this.setState({ flippedCards: this.state.flippedCards + 1 });  //then add one to number of flipped cards
+        setTimeout(() => {
+            if(this.state.flippedCards > 1){ //gives state a chance to update before checking if 2 cards flipped...
+                this.checkForMatch();        //then checks for match
+            };
+        }, 800);
+    };
+
+    shuffleArray = (array) => {
+        let i = 0;
+        for (i = array.length - 1; i > 0; i--) {
+            let j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        };
     };
 
     componentWillMount() {
@@ -121,11 +133,13 @@ class Board extends React.Component {
     render(props) {
         return(
             <React.Fragment>
-                <div style={boardStyle}>
+                <div 
+                    id="gameBoard"
+                    style={boardStyle}>
+                    <Discard />
                     {this.state.deck.map(data => (
                         <Card   
                             key={data} 
-                            keyProp={data}
                             src={data} 
                             id={data.substr(14).slice(0, -13)} //e.g. Ace1, Ace2    
                             value={data.substr(14).slice(0, -13)}  //e.g. Ace1, Ace2

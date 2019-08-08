@@ -1,15 +1,21 @@
 import React from 'react';
 import './game.css';
 import Board from './Board';
+import PickLevel from './PickLevel';
+import GameHead from './GameHead';
+import Timer from './Timer';
+import YouWin from './YouWin';
+import YouLose from './YouLose';
 import Pyro from './Pyro';
 import PlayAgain from './PlayAgain';
 
 class Game extends React.Component {
   state = {
-    time: 90,
+    time: 2,
     gameStarted: false,
     matchesFound: 0,
-    // winningScore: {this.state.time} * 3.14159265359,
+    beginningTime: 0,
+    score: 0
   }
   
   addMatch = () => {
@@ -48,6 +54,8 @@ class Game extends React.Component {
         this.subtractSecond();
       }, 1000);
     }else if(this.state.matchesFound === 10){
+      const setScore = (this.state.beginningTime - (this.state.beginningTime - this.state.time)) * 3.14159;
+      this.setState({ score: Math.round(setScore) + 1 })
       setTimeout(() => {
         pyro.style.display = "block"
         playAgain.style.display = "block";
@@ -69,35 +77,36 @@ class Game extends React.Component {
     this.startTimer();
   };
 
-  handleClick = () => {
+  startGame = () => {
+    document.getElementById('pickLevel').style.display = 'none';
+    document.getElementById('gameBoard').style.display = 'inline-block';
     if(this.state.gameStarted === false){
       this.setState({ gameStarted: true });
       this.openTimer();
     };
   };
-
+  pickLevel = (event) => {
+    const setTime = event.target.value;
+    this.setState({ beginningTime: setTime,
+                    time: setTime })
+    this.startGame();
+  }
 
   render() {
     return (
       <div 
         className="game"
-        onClick={this.handleClick}
         >
-        <header id="gameHead">
-          <h1><u>Memory Match</u></h1>
-          <p>Click the cards to find their matching counterpart!</p>
-        </header>
-        <header 
-          id="timer"
-          style={{display: 'none'}}
-          >{this.state.time}</header>
-        <header
-          id="youWin"
-          style={{ display: 'none' }}>Your Score: {this.state.time}</header>
-        <header id="youLose" style={{ display: 'none' }}>Time is out, sucka.</header>
-
-        
-        <Board 
+        <div id="scoreboard"
+          style={{ height: '17vh', margin: '0 0 3vh' }}>
+          <GameHead/>
+          <Timer time={this.state.time}/>
+          <YouWin score={this.state.score}/>
+          <YouLose/>
+        </div>
+        <PickLevel level={this.pickLevel}/>
+        <Board
+          onClick={this.startGame}
           addMatch={this.addMatch}
           resetMatch={this.resetMatch}
           time={this.state.time}/>

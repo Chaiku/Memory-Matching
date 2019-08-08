@@ -1,16 +1,19 @@
 import React, { Component } from 'react';
 import CardBack from './media/gray_back.png';
+import x from './media/x.png';
+import check from './media/check.png';
 import './card.css'
 
 class Card extends Component {
     
     flipCard = (event) => {
         document.getElementById(this.props.id).style.transform = "rotateY(180deg)";
-        // this.setState({ flipped: true });
         this.props.handleFlip(event);
     };
 
     render(props) {
+        const cardX = `${this.props.id}X`
+        const cardCheck = `${this.props.id}Check`
         return(
             <div 
                 key={this.props.keyProp} 
@@ -19,11 +22,8 @@ class Card extends Component {
                 data-value={this.props.value}
             >
                 <img src={CardBack}
-                    className="cardBack" 
+                    className="cardBack"
                     alt=""
-                    style={{
-                        zIndex: '1'
-                    }}
                     data-value={this.props.value}
                     onClick={ (event) => (
                         this.props.flippedCards < 2 && this.props.time > 0 ?
@@ -34,13 +34,33 @@ class Card extends Component {
                 <img 
                     src={this.props.src} 
                     className="cardFace" 
-                    id={this.props.id}
                     alt=""
                     style={{ 
                         transform: `rotateY(180deg)`,
-                        zIndex: '2'
                     }}
                 />
+                <img
+                    src={x}
+                    alt=''
+                    className='cardFace'
+                    id={cardX}
+                    style={{
+                        zIndex: 1000,
+                        visibility: 'hidden',
+                        transform: `rotateY(180deg)`,
+                    }}
+                />                
+                <img
+                src={check}
+                alt=''
+                className='cardFace'
+                id={cardCheck}
+                style={{
+                    zIndex: 1000,
+                    visibility: 'hidden',
+                    transform: `rotateY(180deg)`,
+                }}
+            />
             </div>
         )
     }

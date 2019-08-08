@@ -13,10 +13,7 @@ class PickLevel extends Component {
             <div 
                 id="pickLevel"
                 style={{
-                    position: 'fixed',
-                    top: '40vh',
-                    left: '10vw',
-                    textAlign: "center"
+                    paddingTop: '12vh'
                 }} >
                 <h1 style={{ color: 'whitesmoke' }}>pick a level</h1>
                 <button 

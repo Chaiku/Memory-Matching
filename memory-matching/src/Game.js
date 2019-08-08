@@ -11,12 +11,11 @@ import PlayAgain from './PlayAgain';
 
 class Game extends React.Component {
   state = {
-    time: 60,
+    time: 2,
     gameStarted: false,
     matchesFound: 0,
-    easyVal: 90,
-    mediumVal: 60,
-    difficultVal: 45
+    beginningTime: 0,
+    score: 0
   }
   
   addMatch = () => {
@@ -55,6 +54,8 @@ class Game extends React.Component {
         this.subtractSecond();
       }, 1000);
     }else if(this.state.matchesFound === 10){
+      const setScore = (this.state.beginningTime - (this.state.beginningTime - this.state.time)) * 3.14159;
+      this.setState({ score: Math.round(setScore) + 1 })
       setTimeout(() => {
         pyro.style.display = "block"
         playAgain.style.display = "block";
@@ -86,7 +87,8 @@ class Game extends React.Component {
   };
   pickLevel = (event) => {
     const setTime = event.target.value;
-    this.setState({ time: setTime });
+    this.setState({ beginningTime: setTime,
+                    time: setTime })
     this.startGame();
   }
 
@@ -95,10 +97,11 @@ class Game extends React.Component {
       <div 
         className="game"
         >
-        <div id="scoreboard">
+        <div id="scoreboard"
+          style={{ height: '17vh', margin: '0 0 3vh' }}>
           <GameHead/>
           <Timer time={this.state.time}/>
-          <YouWin time={this.state.time}/>
+          <YouWin score={this.state.score}/>
           <YouLose/>
         </div>
         <PickLevel level={this.pickLevel}/>

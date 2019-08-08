@@ -7,7 +7,7 @@ class Timer extends Component {
             <header
                 id="youWin"
                 style={{ display: 'none' }}
-            >Your Score: {this.props.time}</header>
+            >Your Score: {this.props.score}</header>
         )
     }       
 }

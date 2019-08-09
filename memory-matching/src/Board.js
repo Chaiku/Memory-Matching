@@ -44,6 +44,18 @@ class Board extends React.Component {
             flippedTwo: '',
             flippedStoreTwo: '',
             matchesFound: this.props.matchesFound,
+            Ace: '1.9',  //these are the "left:" values for discarding
+            Five: '11.7',
+            Six: '21.5',
+            Seven: '31.3',
+            Eight: '41.1',
+            Nine: '50.9',
+            Ten: '60.7',
+            Jack: '70.5',
+            Queen: '80.3',
+            King: '90.1',
+            xPosition: '',
+            faceValue: ''
         };
     };
 
@@ -82,16 +94,24 @@ class Board extends React.Component {
         this.resetMatch();
     }
 
+
     handleMatch = () => {
         this.props.addMatch();  //adds a number to state.matchesFound in Game.js           
         const remove1 = document.getElementById(this.state.flippedStoreOne);
         const remove2 = document.getElementById(this.state.flippedStoreTwo); 
-        const discard = document.getElementById(`discarded${this.state.flippedOne}`);      
+        const remove1Move = document.getElementById(`${this.state.flippedStoreOne}Move`);
+        const remove2Move = document.getElementById(`${this.state.flippedStoreTwo}Move`);;
+        const discard = document.getElementById(`discarded${this.state.flippedOne}`);      ;        
+        remove1Move.classList.add('moveToDiscard');
+        remove2Move.classList.add('moveToDiscard');
+        discard.style.visibility = "visible";
+        discard.classList.add('discardBig');
         setTimeout(() => {
             remove1.style.visibility = "hidden";
             remove2.style.visibility = "hidden";
-            discard.style.visibility = "visible"
-        }, 400);
+            
+        }, 1000);
+        
         this.resetMatch();
     }
 
@@ -106,7 +126,7 @@ class Board extends React.Component {
     handleFlip = (event) => {
         const cardStoreValue = event.target.dataset.value; //e.g. "Ace1" or "Ace2"
         const cardValue = event.target.dataset.value.slice(0,-1); //e.g. "Ace"
-
+        this.setState({ faceValue: cardValue });
         this.state.flippedCards === 0 ?  //if no cards have been flipped yet...
             this.setState({ flippedOne: cardValue, flippedStoreOne: cardStoreValue }) : //assign clicked card to flippedOne, otherwise...
             this.setState({ flippedTwo: cardValue, flippedStoreTwo: cardStoreValue });  //assign clicked card to flippedTwo

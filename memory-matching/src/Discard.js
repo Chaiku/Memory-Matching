@@ -16,66 +16,87 @@ class Discard extends Component {
     render(props) {
         return(
             <div  id="discard" style={{ height: '10vh' }}>
-                <img style={{ visibility: 'hidden' }}
+                    <div class="discardHolder">
+                    <img style={{ visibility: 'hidden' }}
                     src={Ace1}
                     alt=''
                     class='discarded'
                     id='discardedAce'
                 />
+                </div>
+                <div class="discardHolder">
                 <img style={{ visibility: 'hidden' }}
                     src={Five1}
                     alt=''
                     class='discarded'
                     id='discardedFive'
                 />
+                </div>
+                <div class="discardHolder">
                 <img style={{ visibility: 'hidden' }}
                     src={Six1}
                     alt=''
                     class='discarded'
                     id='discardedSix'
                 />
+                </div>
+                <div class="discardHolder">
                 <img style={{ visibility: 'hidden' }}
                     src={Seven1}
                     alt=''
                     class='discarded'
                     id='discardedSeven'
                 />
+                </div>
+                <div class="discardHolder">
                 <img style={{ visibility: 'hidden' }}
                     src={Eight1}
                     alt=''
                     class='discarded'
                     id='discardedEight'
                 />
+                </div>
+                <div class="discardHolder">
                 <img style={{ visibility: 'hidden' }}
                     src={Nine1}
                     alt=''
                     class='discarded'
                     id='discardedNine'
                 />
+                </div>
+                <div class="discardHolder">
                 <img style={{ visibility: 'hidden' }}
                     src={Ten1}
                     alt=''
                     class='discarded'
                     id='discardedTen'
                 />
+                </div>
+                <div class="discardHolder">
                 <img style={{ visibility: 'hidden' }}
                     src={Jack1}
                     alt=''
                     class='discarded'
                     id='discardedJack'
                 />
+                </div>
+                <div class="discardHolder">
                 <img style={{ visibility: 'hidden' }}
                     src={Queen1}
                     alt=''
                     class='discarded'
                     id='discardedQueen'
                 />
+                </div>
+                <div class="discardHolder">
                 <img style={{ visibility: 'hidden' }}
                     src={King1}
                     alt=''
                     class='discarded'
                     id='discardedKing'
                 />
+                </div>
+
             </div>
         )
     }

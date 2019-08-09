@@ -1,22 +1,23 @@
-
+.cardHolder{
+  float: left;
+  width: 9vw; 
+  height: 14.282vw;
+  margin: 1vw 5vw;
+  position: static;
+  border: solid 1px #282c34;
+}
 .card {
-    float: left;
     width: 10vw; 
     height: 15.282vw;
-    margin: 1vw 5vw;
-    position: relative;
-    -webkit-transition: -webkit-transform 1s;
-    -moz-transition: -moz-transform 1s;
-    -o-transition: -o-transform 1s;
-    transition: transform 1s;
+    position: absolute;
+    -webkit-transition: -webkit-transform .8s;
+    -moz-transition: -moz-transform .8s;
+    -o-transition: -o-transform .8s;
+    transition: transform .8s;
     -webkit-transform-style: preserve-3d;
     -moz-transform-style: preserve-3d;
     -o-transform-style: preserve-3d;
     transform-style: preserve-3d;
-    -webkit-transform-origin: center;
-    -moz-transform-origin: center;
-    -o-transform-origin: center;
-    transform-origin: center;
 }
 
 .cardBack,
@@ -31,8 +32,43 @@
     backface-visibility: hidden;
 }
 
-.discarded {
+.discardHolder {
+  float: left;
   width: 6vw;
-  height: auto;
-  margin: 1vh 2vw;
+  height: 9.1692vw;
+  margin: .6vh 1.9vw;
+  /* border: .5px solid gray;
+  border-radius: 5px */
+}
+
+.discarded,
+.cardMove {
+  transition: all 1s linear; 
+  -webkit-transition: all 1s linear;
+  -moz-transition: all 1s ease-out;
+  -ms-transition: all 1s ease-out;
+   -o-transition: all 1s ease-out;  
+   transform: all 1s linear; 
+   -webkit-transform: all 1s linear;
+   -moz-transform: all 1s ease-out;
+   -ms-transform: all 1s ease-out;
+    -o-transform: all 1s ease-out;
+}
+
+.discarded {
+  width: .63vw;
+  height: .9169vw;
+  margin: 4.126vh 2.7vw;
+  transform-origin: center;
+}
+
+.cardMove{
+    transform-origin: 5vw 7.6vh;
+}
+.discardBig {
+  transform: scale(10.1) rotate(2700deg);
+}
+.moveToDiscard {  
+  transform: scale(0.03) rotate(2520deg);
+  position: absolute;
 }

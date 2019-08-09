@@ -1,20 +1,24 @@
 import React, { Component } from 'react';
 import CardBack from './media/gray_back.png';
 import x from './media/x.png';
-import check from './media/check.png';
 import './card.css'
 
 class Card extends Component {
-    
+    state={
+        discarded: false,
+    }
     flipCard = (event) => {
         document.getElementById(this.props.id).style.transform = "rotateY(180deg)";
         this.props.handleFlip(event);
     };
 
+
     render(props) {
-        const cardX = `${this.props.id}X`
-        const cardCheck = `${this.props.id}Check`
+        const cardX = `${this.props.id}X`;
+        const cardMove = `${this.props.id}Move`;
         return(
+            <div class="cardHolder">
+            <div class="cardMove" id={cardMove}>
             <div 
                 key={this.props.keyProp} 
                 className="card" 
@@ -50,17 +54,8 @@ class Card extends Component {
                         transform: `rotateY(180deg)`,
                     }}
                 />                
-                <img
-                src={check}
-                alt=''
-                className='cardFace'
-                id={cardCheck}
-                style={{
-                    zIndex: 1000,
-                    visibility: 'hidden',
-                    transform: `rotateY(180deg)`,
-                }}
-            />
+            </div>
+            </div>
             </div>
         )
     }

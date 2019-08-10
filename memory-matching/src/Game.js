@@ -55,7 +55,8 @@ class Game extends React.Component {
       }, 1000);
     }else if(this.state.matchesFound === 10){
       const setScore = (this.state.beginningTime - (this.state.beginningTime - this.state.time)) * 3.14159;
-      this.setState({ score: Math.round(setScore) + 1 })
+      // this.setState({ score: Math.round(setScore) + 1 })
+      this.setState({ score: (setScore + .411).toFixed(3) })
       setTimeout(() => {
         pyro.style.display = "block"
         playAgain.style.display = "block";

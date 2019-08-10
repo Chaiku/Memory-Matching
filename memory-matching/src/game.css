@@ -1,10 +1,10 @@
-body {
+/* body {
   background-color: #282c34;
-  overflow-y: scroll;
-}
+} */
 
 .game {
   text-align: center;
+  margin: 0 0 0 3.4vw;
 }
 #youWin,
 #youLose,
@@ -31,17 +31,17 @@ body {
   text-align: center;
   position: fixed;
   bottom: 15vh;
-  left: 38.5vw;
+  left: 38vw;
   z-index: 1000;
 }
 
 .playBtn {
-  height: 10vh;
+  height: 13vw;
   width: 23vw;
+  margin: 0 2vw;
   text-transform: uppercase;
   font-weight: 800;
   border-radius: 50%;
   background-color: whitesmoke;
   color: #282c34;
-  margin: 0 2vw 2vh;
 }
